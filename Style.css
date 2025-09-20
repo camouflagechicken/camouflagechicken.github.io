@@ -1,0 +1,78 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+.fira-code {
+    font-family: 'Fira Code', monospace;
+}
+/* Custom styles for project cards */
+.project-card {
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.project-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+}
+.project-card .gif-preview {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.project-card:hover .gif-preview {
+    opacity: 1;
+}
+
+/* Custom styles for active tabs and smooth transitions */
+.tab {
+    transition: all 0.2s ease-in-out;
+}
+.tab.active {
+    background-color: #0e7490; /* cyan-700 */
+    color: #ffffff;
+    border-bottom-color: #67e8f9; /* cyan-300 */
+}
+.sub-tab-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.sub-tab-container.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+.content-section.visible {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Code Preview Modal */
+#code-preview-modal {
+    display: none; /* Hidden by default */
+}
+#code-preview-modal.visible {
+    display: flex;
+}
+/* Custom scrollbar for code preview */
+#code-preview-content pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+#code-preview-content pre::-webkit-scrollbar-track {
+    background: #1f2937; /* gray-800 */
+}
+#code-preview-content pre::-webkit-scrollbar-thumb {
+    background: #4b5563; /* gray-600 */
+    border-radius: 4px;
+}
+#code-preview-content pre::-webkit-scrollbar-thumb:hover {
+    background: #6b7280; /* gray-500 */
+}

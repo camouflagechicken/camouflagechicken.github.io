@@ -3,42 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Website</title>
+    <title>Matthew Grindle's Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-900 text-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 sm:p-12 shadow-2xl max-w-2xl mx-auto text-center transform hover:scale-105 transition-transform duration-300">
-        <header>
-            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-2">Welcome</h1>
-            <p class="text-lg sm:text-xl text-cyan-400 mb-6">This is my corner of the internet.</p>
-        </header>
-        
-        <main>
-            <p class="text-base sm:text-lg text-gray-300 mb-8">
-                This webpage is the starting point. It's a simple, static HTML file hosted and served to you from a server somewhere on the internet. You can edit this file to build anything you can imagine.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="#" class="w-full sm:w-auto bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:translate-y-[-2px]">
-                    Project 1
-                </a>
-                <a href="#" class="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:translate-y-[-2px]">
-                    About Me
-                </a>
-            </div>
-        </main>
+<body class="bg-gray-900 text-gray-200 min-h-screen">
 
-        <footer class="mt-10 border-t border-gray-700 pt-6">
-            <p class="text-sm text-gray-500">&copy; 2025 Your Name Here. Built from a simple file.</p>
-        </footer>
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-white">Matthew Grindle</h1>
+            <p class="text-cyan-400 mt-2 text-lg">Problem Solver</p>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="bg-gray-800 rounded-t-lg border-b-2 border-gray-700">
+            <div id="main-tabs" class="flex">
+                <button class="tab flex-1 p-4 font-bold text-lg border-b-4 border-transparent hover:bg-gray-700 active" data-main-tab="about">About Me</button>
+                <button class="tab flex-1 p-4 font-bold text-lg border-b-4 border-transparent hover:bg-gray-700" data-main-tab="projects">Projects</button>
+            </div>
+        </nav>
+
+        <!-- Sub Navigation & Main Content Area -->
+        <div class="bg-gray-800 rounded-b-lg p-6 min-h-[50vh]">
+            <!-- Wrapper for Sub Tabs to enable absolute positioning -->
+            <div class="relative h-16 mb-2">
+                <!-- Sub Tabs for "About Me" -->
+                <div id="sub-tabs-about" class="sub-tab-container open border-b border-cyan-800 pb-4">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm active" data-content-id="content-contact">Contact Me</button>
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-learnings">What I've Learned</button>
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-experience">Experience</button>
+                    </div>
+                </div>
+
+                <!-- Sub Tabs for "Projects" -->
+                <div id="sub-tabs-projects" class="sub-tab-container border-b border-cyan-800 pb-4">
+                     <div class="flex flex-wrap gap-2 justify-center">
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm active" data-content-id="content-school">School</button>
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-games">Games</button>
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-bots">Bots</button>
+                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-misc">Misc</button>
+                    </div>
+                </div>
+            </div>
+            
+            <main id="content-area">
+                <!-- About Me Content -->
+                <section id="content-contact" class="content-section visible">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">Contact</h2>
+                    <p>Information on how to reach you would go here. Links to GitHub, LinkedIn, or other platforms.</p>
+                </section>
+                <section id="content-learnings" class="content-section">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">Learnings</h2>
+                    <p>A space to document insights from neuroscience, philosophy, psychology, etc. A place to model reality.</p>
+                </section>
+                <section id="content-experience" class="content-section">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">Experience</h2>
+                    <p>Details about professional or academic experience.</p>
+                </section>
+
+                <!-- Projects Content -->
+                <section id="content-school" class="content-section">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">School Projects</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Project Card Example -->
+                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
+                            <div class="relative w-full h-40 mb-4">
+                                <!-- Static Image (Visible by default) -->
+                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
+                                <!-- GIF Preview (Visible on hover) -->
+                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Data Structures Final</h3>
+                            <p class="text-gray-300 flex-grow mb-4">
+                                <strong class="text-cyan-400 block">Project:</strong> Implemented a graph traversal algorithm to solve a maze.
+                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Gained a concrete understanding of how abstract data structures like graphs can model and solve real-world spatial problems.
+                            </p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/school/graph-solver.js">View Code</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="content-games" class="content-section">
+                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">Games</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Project Card Example -->
+                        <div class="bg-gray-700 rounded-lg p-4 flex flex-col">
+                            <img src="https://placehold.co/600x400/083344/67e8f9?text=Game+GIF" alt="Project Preview GIF" class="rounded-md mb-4 w-full h-40 object-cover">
+                            <h3 class="text-xl font-bold mb-2">Web-Based RPG</h3>
+                            <p class="text-gray-400 flex-grow mb-4">A simple role-playing game built with HTML5 Canvas and JavaScript.</p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/games/rpg-engine.js">View Code</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="content-bots" class="content-section">
+                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">Bots</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Project Card Example -->
+                        <div class="bg-gray-700 rounded-lg p-4 flex flex-col">
+                            <img src="https://placehold.co/600x400/083344/67e8f9?text=Bot+GIF" alt="Project Preview GIF" class="rounded-md mb-4 w-full h-40 object-cover">
+                            <h3 class="text-xl font-bold mb-2">Discord Moderation Bot</h3>
+                            <p class="text-gray-400 flex-grow mb-4">Automates server tasks and moderation using the Discord.js library.</p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/bots/moderator.js">View Code</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="content-misc" class="content-section">
+                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">Miscellaneous</h2>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Project Card Example -->
+                        <div class="bg-gray-700 rounded-lg p-4 flex flex-col">
+                            <img src="https://placehold.co/600x400/083344/67e8f9?text=Misc+GIF" alt="Project Preview GIF" class="rounded-md mb-4 w-full h-40 object-cover">
+                            <h3 class="text-xl font-bold mb-2">Pi Server Setup Script</h3>
+                            <p class="text-gray-400 flex-grow mb-4">A shell script to automate the setup of a web server on a Raspberry Pi.</p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/misc/pi-setup.sh">View Code</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
     </div>
+    
+    <!-- Code Preview Modal -->
+    <div id="code-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 items-center justify-center p-4">
+        <div class="bg-gray-800 border border-gray-600 rounded-lg shadow-xl w-full max-w-4xl h-full max-h-[80vh] flex flex-col">
+            <header class="p-4 border-b border-gray-600 flex justify-between items-center">
+                <h3 id="code-preview-title" class="text-lg font-bold fira-code"></h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-white">&times;</button>
+            </header>
+            <div id="code-preview-content" class="p-4 flex-grow overflow-auto">
+                <pre class="fira-code text-sm"><code id="code-block"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js" defer></script>
 </body>
 </html>

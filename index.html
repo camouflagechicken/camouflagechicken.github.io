@@ -7,10 +7,148 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-    
-    <!-- Link to the external stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* --- Main Tab Styles --- */
+        .tab {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab.active {
+            background-color: #0e7490; /* cyan-700 */
+            color: #ffffff;
+            border-bottom-color: #67e8f9; /* cyan-300 */
+        }
+        .sub-tab-container {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .sub-tab-container.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .content-section.visible {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- Project Card Hover Effect --- */
+        .project-card {
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+        }
+        .project-card .gif-preview {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .project-card:hover .gif-preview {
+            opacity: 1;
+        }
+
+        /* --- Code Viewer Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none; /* Changed from 'none' to 'flex' by JS */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-container {
+            background: #1f2937; /* gray-800 */
+            border: 1px solid #374151; /* gray-700 */
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid #374151; /* gray-700 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #9ca3af; /* gray-400 */
+            cursor: pointer;
+        }
+        .code-tabs {
+            flex-shrink: 0;
+            border-bottom: 1px solid #374151;
+        }
+        .code-tab {
+            background: transparent;
+            color: #9ca3af; /* gray-400 */
+            border: none;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .code-tab.active {
+            color: #67e8f9; /* cyan-300 */
+            border-bottom-color: #67e8f9; /* cyan-300 */
+        }
+        .code-content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            position: relative;
+        }
+        .code-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .code-content.active {
+            display: block;
+        }
+        pre {
+            height: 100%;
+            margin: 0;
+        }
+        code {
+            display: block;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            height: 100%;
+        }
+
+    </style>
 </head>
 <body class="bg-gray-900 text-gray-200 min-h-screen">
 
@@ -72,12 +210,9 @@
                 <section id="content-school" class="content-section">
                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">School Projects</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Project Card Example -->
                         <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
                             <div class="relative w-full h-40 mb-4">
-                                <!-- Static Image (Visible by default) -->
                                 <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
-                                <!-- GIF Preview (Visible on hover) -->
                                 <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
                             </div>
                             <h3 class="text-xl font-bold mb-2">Data Structures Final</h3>
@@ -85,64 +220,220 @@
                                 <strong class="text-cyan-400 block">Project:</strong> Implemented a graph traversal algorithm to solve a maze.
                                 <strong class="text-cyan-400 block mt-2">Learning:</strong> Gained a concrete understanding of how abstract data structures like graphs can model and solve real-world spatial problems.
                             </p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/school/graph-solver.js">View Code</button>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="data-structures-final">View Code</button>
                         </div>
                     </div>
                 </section>
                 <section id="content-games" class="content-section">
                      <h2 class="text-3xl font-bold text-cyan-400 mb-4">Games</h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Project Card Example -->
-                        <div class="bg-gray-700 rounded-lg p-4 flex flex-col">
-                            <img src="https://placehold.co/600x400/083344/67e8f9?text=Game+GIF" alt="Project Preview GIF" class="rounded-md mb-4 w-full h-40 object-cover">
-                            <h3 class="text-xl font-bold mb-2">Web-Based RPG</h3>
-                            <p class="text-gray-400 flex-grow mb-4">A simple role-playing game built with HTML5 Canvas and JavaScript.</p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/games/rpg-engine.js">View Code</button>
+                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
+                            <div class="relative w-full h-40 mb-4">
+                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">2D Platformer</h3>
+                            <p class="text-gray-300 flex-grow mb-4">
+                                <strong class="text-cyan-400 block">Project:</strong> Built a 2D platformer game engine from scratch using JavaScript.
+                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Mastered game loop mechanics, collision detection, and sprite animation, deepening my understanding of physics in a digital space.
+                            </p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="2d-platformer">View Code</button>
                         </div>
                     </div>
                 </section>
                 <section id="content-bots" class="content-section">
                      <h2 class="text-3xl font-bold text-cyan-400 mb-4">Bots</h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Project Card Example -->
-                        <div class="bg-gray-700 rounded-lg p-4 flex flex-col">
-                            <img src="https://placehold.co/600x400/083344/67e8f9?text=Bot+GIF" alt="Project Preview GIF" class="rounded-md mb-4 w-full h-40 object-cover">
+                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
+                            <div class="relative w-full h-40 mb-4">
+                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
+                            </div>
                             <h3 class="text-xl font-bold mb-2">Discord Moderation Bot</h3>
-                            <p class="text-gray-400 flex-grow mb-4">Automates server tasks and moderation using the Discord.js library.</p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/bots/moderator.js">View Code</button>
+                            <p class="text-gray-300 flex-grow mb-4">
+                                <strong class="text-cyan-400 block">Project:</strong> Developed a bot to automate user moderation and custom commands for a community server.
+                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Learned to interact with third-party APIs, manage asynchronous events, and handle state for a persistent application.
+                            </p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="discord-bot">View Code</button>
                         </div>
                     </div>
                 </section>
                 <section id="content-misc" class="content-section">
                      <h2 class="text-3xl font-bold text-cyan-400 mb-4">Miscellaneous</h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Project Card Example -->
-                        <div class="bg-gray-700 rounded-lg p-4 flex flex-col">
-                            <img src="https://placehold.co/600x400/083344/67e8f9?text=Misc+GIF" alt="Project Preview GIF" class="rounded-md mb-4 w-full h-40 object-cover">
-                            <h3 class="text-xl font-bold mb-2">Pi Server Setup Script</h3>
-                            <p class="text-gray-400 flex-grow mb-4">A shell script to automate the setup of a web server on a Raspberry Pi.</p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-code-file="/misc/pi-setup.sh">View Code</button>
+                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
+                            <div class="relative w-full h-40 mb-4">
+                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
+                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Data Visualization Tool</h3>
+                            <p class="text-gray-300 flex-grow mb-4">
+                                <strong class="text-cyan-400 block">Project:</strong> Created a web tool to parse CSV files and generate interactive charts using D3.js.
+                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Explored the complexities of data binding and mapping abstract data to visual representations.
+                            </p>
+                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="data-viz-tool">View Code</button>
                         </div>
                     </div>
                 </section>
             </main>
         </div>
     </div>
-    
-    <!-- Code Preview Modal -->
-    <div id="code-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 items-center justify-center p-4">
-        <div class="bg-gray-800 border border-gray-600 rounded-lg shadow-xl w-full max-w-4xl h-full max-h-[80vh] flex flex-col">
-            <header class="p-4 border-b border-gray-600 flex justify-between items-center">
-                <h3 id="code-preview-title" class="text-lg font-bold fira-code"></h3>
-                <button id="close-modal-btn" class="text-gray-400 hover:text-white">&times;</button>
+
+    <!-- Code Viewer Modal -->
+    <div id="code-modal" class="modal-overlay">
+        <div class="modal-container">
+            <header class="modal-header">
+                <h2 id="modal-title" class="text-xl font-bold text-white">Code Viewer</h2>
+                <button id="modal-close" class="modal-close-btn">&times;</button>
             </header>
-            <div id="code-preview-content" class="p-4 flex-grow overflow-auto">
-                <pre class="fira-code text-sm"><code id="code-block"></code></pre>
+            <div id="modal-code-tabs" class="code-tabs flex">
+                <!-- Code file tabs will be dynamically inserted here -->
+            </div>
+            <div id="modal-code-content" class="code-content-area">
+                <!-- Code content panes will be dynamically inserted here -->
             </div>
         </div>
     </div>
 
-    <!-- Link to the external JavaScript file -->
-    <script src="script.js" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA STORE FOR PROJECT CODE (ROBUST VERSION) ---
+            // Using single-quoted strings to prevent template literal conflicts.
+            const projectCode = {
+                'data-structures-final': {
+                    title: 'Data Structures Final',
+                    files: {
+                        'main.java': 'public class MazeSolver {\\n    // Java code for the maze traversal...\\n    public static void main(String[] args) {\\n        System.out.println("Solving maze...");\\n    }\\n}',
+                        'Graph.java': 'public class Graph {\\n    // Graph data structure implementation...\\n}',
+                    }
+                },
+                '2d-platformer': {
+                    title: '2D Platformer',
+                    files: {
+                        'game.js': 'const canvas = document.getElementById(\'game\');\\nconst ctx = canvas.getContext(\'2d\');\\n\\nfunction gameLoop() {\\n    // Game logic here\\n    requestAnimationFrame(gameLoop);\\n}\\ngameLoop();',
+                        'player.js': 'class Player {\\n    constructor() {\\n        this.x = 50;\\n        this.y = 50;\\n    }\\n}',
+                        'style.css': 'canvas {\\n    border: 1px solid black;\\n    background: #f0f0f0;\\n}'
+                    }
+                },
+                'discord-bot': {
+                    title: 'Discord Moderation Bot',
+                    files: {
+                        'index.js': 'const { Client, Intents } = require(\'discord.js\');\\nconst client = new Client({ intents: [Intents.FLAGS.GUILDS] });\\n\\nclient.on(\'ready\', () => {\\n  console.log(`Logged in as ${client.user.tag}!`);\\n});\\n\\nclient.login(\'YOUR_TOKEN_HERE\');',
+                        'package.json': '{\\n  "name": "discord-bot",\\n  "version": "1.0.0",\\n  "description": "",\\n  "main": "index.js",\\n  "dependencies": {\\n    "discord.js": "^13.1.0"\\n  }\\n}'
+                    }
+                },
+                'data-viz-tool': {
+                    title: 'Data Visualization Tool',
+                    files: {
+                        'index.html': '<!DOCTYPE html>\\n<html>\\n<head>\\n    <script src="https://d3js.org/d3.v7.min.js"><\\/script>\\n</head>\\n<body>\\n    <svg id="chart" width="400" height="300"><\\/svg>\\n    <script src="chart.js"><\\/script>\\n</body>\\n</html>',
+                        'chart.js': '// D3.js code to create a chart\\nd3.select(\'#chart\').append(\'circle\').attr(\'cx\', 50).attr(\'cy\', 50).attr(\'r\', 20);'
+                    }
+                }
+            };
+
+
+            // --- TAB SWITCHING LOGIC ---
+            const mainTabs = document.querySelectorAll('[data-main-tab]');
+            const subTabContainers = document.querySelectorAll('.sub-tab-container');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function switchMainTab(targetTab) {
+                mainTabs.forEach(tab => tab.classList.toggle('active', tab === targetTab));
+                const targetId = targetTab.dataset.mainTab;
+                subTabContainers.forEach(container => container.classList.toggle('open', container.id === `sub-tabs-${targetId}`));
+                const firstSubTab = document.querySelector(`#sub-tabs-${targetId} .sub-tab`);
+                if (firstSubTab) switchContent(firstSubTab);
+            }
+            
+            function switchContent(targetSubTab) {
+                const parentContainer = targetSubTab.closest('.sub-tab-container');
+                parentContainer.querySelectorAll('.sub-tab').forEach(sub => sub.classList.remove('active'));
+                targetSubTab.classList.add('active');
+                const contentId = targetSubTab.dataset.contentId;
+                contentSections.forEach(section => section.classList.toggle('visible', section.id === contentId));
+            }
+
+            document.getElementById('main-tabs').addEventListener('click', (e) => {
+                if (e.target.matches('[data-main-tab]')) switchMainTab(e.target);
+            });
+            
+            // --- MODAL LOGIC ---
+            const modal = document.getElementById('code-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalCloseBtn = document.getElementById('modal-close');
+            const codeTabsContainer = document.getElementById('modal-code-tabs');
+            const codeContentContainer = document.getElementById('modal-code-content');
+
+            function openModal(projectId) {
+                const projectData = projectCode[projectId];
+                if (!projectData) return;
+
+                modalTitle.textContent = projectData.title;
+                codeTabsContainer.innerHTML = '';
+                codeContentContainer.innerHTML = '';
+
+                Object.entries(projectData.files).forEach(([filename, code], index) => {
+                    const isActive = index === 0;
+                    // Create Tab Button
+                    const tabButton = document.createElement('button');
+                    tabButton.className = `code-tab ${isActive ? 'active' : ''}`;
+                    tabButton.textContent = filename;
+                    tabButton.dataset.filename = filename;
+                    codeTabsContainer.appendChild(tabButton);
+
+                    // Create Code Content Pane
+                    const contentPane = document.createElement('div');
+                    contentPane.className = `code-content ${isActive ? 'active' : ''}`;
+                    contentPane.dataset.filename = filename;
+                    contentPane.innerHTML = `<pre><code class="language-js">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`;
+                    codeContentContainer.appendChild(contentPane);
+                });
+
+                modal.style.display = 'flex';
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+            
+            // --- UNIFIED EVENT LISTENER FOR CONTAINER ---
+            document.querySelector('.container').addEventListener('click', (e) => {
+                // Handle sub-tab clicks
+                if (e.target.matches('.sub-tab')) {
+                    switchContent(e.target);
+                }
+                // Handle "View Code" button clicks
+                const viewCodeBtn = e.target.closest('.view-code-btn');
+                if (viewCodeBtn) {
+                    const projectId = viewCodeBtn.dataset.projectId;
+                    openModal(projectId);
+                }
+            });
+
+            // Event listeners for closing the modal
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // Event listener for switching code tabs inside the modal
+            codeTabsContainer.addEventListener('click', (e) => {
+                if (e.target.matches('.code-tab')) {
+                    const filename = e.target.dataset.filename;
+                    codeTabsContainer.querySelectorAll('.code-tab').forEach(tab => tab.classList.toggle('active', tab === e.target));
+                    codeContentContainer.querySelectorAll('.code-content').forEach(content => content.classList.toggle('active', content.dataset.filename === filename));
+                }
+            });
+
+            // Initialize view
+            switchMainTab(document.querySelector('[data-main-tab].active'));
+        });
+    </script>
 </body>
 </html>
+
+

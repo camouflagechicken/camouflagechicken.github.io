@@ -80,15 +80,11 @@
             background: #1f2937; /* gray-800 */
             border: 1px solid #374151; /* gray-700 */
             border-radius: 0.5rem;
-            width: 90%;
-            max-width: 800px;
-            height: 80vh;
             display: flex;
             flex-direction: column;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         .modal-header {
-            padding: 1rem;
             border-bottom: 1px solid #374151; /* gray-700 */
             display: flex;
             justify-content: space-between;
@@ -110,7 +106,6 @@
             background: transparent;
             color: #9ca3af; /* gray-400 */
             border: none;
-            padding: 0.75rem 1rem;
             cursor: pointer;
             border-bottom: 2px solid transparent;
             transition: all 0.2s ease;
@@ -141,7 +136,6 @@
         }
         code {
             display: block;
-            padding: 1rem;
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.875rem;
             line-height: 1.5;
@@ -155,7 +149,7 @@
     <div class="container mx-auto p-4 sm:p-6 md:p-8">
         <!-- Header -->
         <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-white">Matthew Grindle</h1>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Matthew Grindle</h1>
             <p class="text-cyan-400 mt-2 text-lg">Problem Solver</p>
         </header>
 
@@ -168,9 +162,9 @@
         </nav>
 
         <!-- Sub Navigation & Main Content Area -->
-        <div class="bg-gray-800 rounded-b-lg p-6 min-h-[50vh]">
+        <div class="bg-gray-800 rounded-b-lg p-4 md:p-6 min-h-[50vh]">
             <!-- Wrapper for Sub Tabs to enable absolute positioning -->
-            <div class="relative h-16 mb-2">
+            <div class="relative min-h-[4rem] mb-2">
                 <!-- Sub Tabs for "About Me" -->
                 <div id="sub-tabs-about" class="sub-tab-container open border-b border-cyan-800 pb-4">
                     <div class="flex flex-wrap gap-2 justify-center">
@@ -194,21 +188,21 @@
             <main id="content-area">
                 <!-- About Me Content -->
                 <section id="content-contact" class="content-section visible">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">Contact</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Contact</h2>
                     <p>Information on how to reach you would go here. Links to GitHub, LinkedIn, or other platforms.</p>
                 </section>
                 <section id="content-learnings" class="content-section">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">Learnings</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Learnings</h2>
                     <p>A space to document insights from neuroscience, philosophy, psychology, etc. A place to model reality.</p>
                 </section>
                 <section id="content-experience" class="content-section">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">Experience</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Experience</h2>
                     <p>Details about professional or academic experience.</p>
                 </section>
 
                 <!-- Projects Content -->
                 <section id="content-school" class="content-section">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">School Projects</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">School Projects</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
                             <div class="relative w-full h-40 mb-4">
@@ -216,7 +210,7 @@
                                 <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
                             </div>
                             <h3 class="text-xl font-bold mb-2">Data Structures Final</h3>
-                            <p class="text-gray-300 flex-grow mb-4">
+                            <p class="text-gray-300 flex-grow mb-4 text-sm">
                                 <strong class="text-cyan-400 block">Project:</strong> Implemented a graph traversal algorithm to solve a maze.
                                 <strong class="text-cyan-400 block mt-2">Learning:</strong> Gained a concrete understanding of how abstract data structures like graphs can model and solve real-world spatial problems.
                             </p>
@@ -225,7 +219,7 @@
                     </div>
                 </section>
                 <section id="content-games" class="content-section">
-                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">Games</h2>
+                     <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Games</h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
                             <div class="relative w-full h-40 mb-4">
@@ -233,7 +227,7 @@
                                 <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
                             </div>
                             <h3 class="text-xl font-bold mb-2">2D Platformer</h3>
-                            <p class="text-gray-300 flex-grow mb-4">
+                            <p class="text-gray-300 flex-grow mb-4 text-sm">
                                 <strong class="text-cyan-400 block">Project:</strong> Built a 2D platformer game engine from scratch using JavaScript.
                                 <strong class="text-cyan-400 block mt-2">Learning:</strong> Mastered game loop mechanics, collision detection, and sprite animation, deepening my understanding of physics in a digital space.
                             </p>
@@ -242,7 +236,7 @@
                     </div>
                 </section>
                 <section id="content-bots" class="content-section">
-                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">Bots</h2>
+                     <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Bots</h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
                             <div class="relative w-full h-40 mb-4">
@@ -250,7 +244,7 @@
                                 <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
                             </div>
                             <h3 class="text-xl font-bold mb-2">Discord Moderation Bot</h3>
-                            <p class="text-gray-300 flex-grow mb-4">
+                            <p class="text-gray-300 flex-grow mb-4 text-sm">
                                 <strong class="text-cyan-400 block">Project:</strong> Developed a bot to automate user moderation and custom commands for a community server.
                                 <strong class="text-cyan-400 block mt-2">Learning:</strong> Learned to interact with third-party APIs, manage asynchronous events, and handle state for a persistent application.
                             </p>
@@ -259,7 +253,7 @@
                     </div>
                 </section>
                 <section id="content-misc" class="content-section">
-                     <h2 class="text-3xl font-bold text-cyan-400 mb-4">Miscellaneous</h2>
+                     <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Miscellaneous</h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
                             <div class="relative w-full h-40 mb-4">
@@ -267,7 +261,7 @@
                                 <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
                             </div>
                             <h3 class="text-xl font-bold mb-2">Data Visualization Tool</h3>
-                            <p class="text-gray-300 flex-grow mb-4">
+                            <p class="text-gray-300 flex-grow mb-4 text-sm">
                                 <strong class="text-cyan-400 block">Project:</strong> Created a web tool to parse CSV files and generate interactive charts using D3.js.
                                 <strong class="text-cyan-400 block mt-2">Learning:</strong> Explored the complexities of data binding and mapping abstract data to visual representations.
                             </p>
@@ -281,9 +275,9 @@
 
     <!-- Code Viewer Modal -->
     <div id="code-modal" class="modal-overlay">
-        <div class="modal-container">
-            <header class="modal-header">
-                <h2 id="modal-title" class="text-xl font-bold text-white">Code Viewer</h2>
+        <div class="modal-container w-[95%] sm:w-[90%] md:max-w-3xl lg:max-w-4xl h-auto max-h-[90vh]">
+            <header class="modal-header p-3 sm:p-4">
+                <h2 id="modal-title" class="text-lg sm:text-xl font-bold text-white">Code Viewer</h2>
                 <button id="modal-close" class="modal-close-btn">&times;</button>
             </header>
             <div id="modal-code-tabs" class="code-tabs flex">
@@ -377,7 +371,7 @@
                     const isActive = index === 0;
                     // Create Tab Button
                     const tabButton = document.createElement('button');
-                    tabButton.className = `code-tab ${isActive ? 'active' : ''}`;
+                    tabButton.className = `code-tab p-2 text-xs sm:p-3 sm:text-sm ${isActive ? 'active' : ''}`;
                     tabButton.textContent = filename;
                     tabButton.dataset.filename = filename;
                     codeTabsContainer.appendChild(tabButton);
@@ -386,7 +380,7 @@
                     const contentPane = document.createElement('div');
                     contentPane.className = `code-content ${isActive ? 'active' : ''}`;
                     contentPane.dataset.filename = filename;
-                    contentPane.innerHTML = `<pre><code class="language-js">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`;
+                    contentPane.innerHTML = `<pre><code class="language-js p-2 sm:p-4">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`;
                     codeContentContainer.appendChild(contentPane);
                 });
 
@@ -414,7 +408,8 @@
             // Event listeners for closing the modal
             modalCloseBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
+                if (e.target.closest('.modal-container')) return;
+                closeModal();
             });
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeModal();
@@ -435,5 +430,7 @@
     </script>
 </body>
 </html>
+
+
 
 

@@ -1,437 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew Grindle's Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* --- Main Tab Styles --- */
-        .tab {
-            transition: all 0.2s ease-in-out;
-        }
-        .tab.active {
-            background-color: #0e7490; /* cyan-700 */
-            color: #ffffff;
-            border-bottom-color: #67e8f9; /* cyan-300 */
-        }
-        .sub-tab-container {
-            position: absolute;
-            width: 100%;
-            left: 0;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-        .sub-tab-container.open {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .content-section.visible {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* --- Project Card Hover Effect --- */
-        .project-card {
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-        }
-        .project-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
-        }
-        .project-card .gif-preview {
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .project-card:hover .gif-preview {
-            opacity: 1;
-        }
-
-        /* --- Code Viewer Modal Styles --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none; /* Changed from 'none' to 'flex' by JS */
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .modal-container {
-            background: #1f2937; /* gray-800 */
-            border: 1px solid #374151; /* gray-700 */
-            border-radius: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .modal-header {
-            border-bottom: 1px solid #374151; /* gray-700 */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            line-height: 1;
-            color: #9ca3af; /* gray-400 */
-            cursor: pointer;
-        }
-        .code-tabs {
-            flex-shrink: 0;
-            border-bottom: 1px solid #374151;
-        }
-        .code-tab {
-            background: transparent;
-            color: #9ca3af; /* gray-400 */
-            border: none;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-        .code-tab.active {
-            color: #67e8f9; /* cyan-300 */
-            border-bottom-color: #67e8f9; /* cyan-300 */
-        }
-        .code-content-area {
-            flex-grow: 1;
-            overflow-y: auto;
-            position: relative;
-        }
-        .code-content {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-        .code-content.active {
-            display: block;
-        }
-        pre {
-            height: 100%;
-            margin: 0;
-        }
-        code {
-            display: block;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            height: 100%;
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>camouflagechicken — autonomous AI &amp; quant systems</title>
+<meta name="description" content="I distill systems into logical flows, then ship them — offline LLMs, voice agents, multi-agent apps, and trading bots that run for real.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-900 text-gray-200 min-h-screen">
+<body>
 
-    <div class="container mx-auto p-4 sm:p-6 md:p-8">
-        <!-- Header -->
-        <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Matthew Grindle</h1>
-            <p class="text-cyan-400 mt-2 text-lg">Problem Solver</p>
-        </header>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="glow glow-a" aria-hidden="true"></div>
+<div class="glow glow-b" aria-hidden="true"></div>
 
-        <!-- Main Navigation -->
-        <nav class="bg-gray-800 rounded-t-lg border-b-2 border-gray-700">
-            <div id="main-tabs" class="flex">
-                <button class="tab flex-1 p-4 font-bold text-lg border-b-4 border-transparent hover:bg-gray-700 active" data-main-tab="about">About Me</button>
-                <button class="tab flex-1 p-4 font-bold text-lg border-b-4 border-transparent hover:bg-gray-700" data-main-tab="projects">Projects</button>
-            </div>
-        </nav>
+<header class="nav">
+  <a class="brand" href="#top">camouflagechicken<span class="blink">_</span></a>
+  <nav class="nav-links">
+    <a href="#projects">projects</a>
+    <a href="#about">about</a>
+    <a href="#stack">stack</a>
+    <a class="external" href="https://github.com/camouflagechicken" target="_blank" rel="noopener">github ↗</a>
+  </nav>
+</header>
 
-        <!-- Sub Navigation & Main Content Area -->
-        <div class="bg-gray-800 rounded-b-lg p-4 md:p-6 min-h-[50vh]">
-            <!-- Wrapper for Sub Tabs to enable absolute positioning -->
-            <div class="relative min-h-[4rem] mb-2">
-                <!-- Sub Tabs for "About Me" -->
-                <div id="sub-tabs-about" class="sub-tab-container open border-b border-cyan-800 pb-4">
-                    <div class="flex flex-wrap gap-2 justify-center">
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm active" data-content-id="content-contact">Contact Me</button>
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-learnings">What I've Learned</button>
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-experience">Experience</button>
-                    </div>
-                </div>
-
-                <!-- Sub Tabs for "Projects" -->
-                <div id="sub-tabs-projects" class="sub-tab-container border-b border-cyan-800 pb-4">
-                     <div class="flex flex-wrap gap-2 justify-center">
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm active" data-content-id="content-school">School</button>
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-games">Games</button>
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-bots">Bots</button>
-                        <button class="sub-tab px-4 py-2 rounded-md bg-gray-700 hover:bg-cyan-700 text-sm" data-content-id="content-misc">Misc</button>
-                    </div>
-                </div>
-            </div>
-            
-            <main id="content-area">
-                <!-- About Me Content -->
-                <section id="content-contact" class="content-section visible">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Contact</h2>
-                    <p>Information on how to reach you would go here. Links to GitHub, LinkedIn, or other platforms.</p>
-                </section>
-                <section id="content-learnings" class="content-section">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Learnings</h2>
-                    <p>A space to document insights from neuroscience, philosophy, psychology, etc. A place to model reality.</p>
-                </section>
-                <section id="content-experience" class="content-section">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Experience</h2>
-                    <p>Details about professional or academic experience.</p>
-                </section>
-
-                <!-- Projects Content -->
-                <section id="content-school" class="content-section">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">School Projects</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
-                            <div class="relative w-full h-40 mb-4">
-                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Data Structures Final</h3>
-                            <p class="text-gray-300 flex-grow mb-4 text-sm">
-                                <strong class="text-cyan-400 block">Project:</strong> Implemented a graph traversal algorithm to solve a maze.
-                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Gained a concrete understanding of how abstract data structures like graphs can model and solve real-world spatial problems.
-                            </p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="data-structures-final">View Code</button>
-                        </div>
-                    </div>
-                </section>
-                <section id="content-games" class="content-section">
-                     <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Games</h2>
-                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
-                            <div class="relative w-full h-40 mb-4">
-                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">2D Platformer</h3>
-                            <p class="text-gray-300 flex-grow mb-4 text-sm">
-                                <strong class="text-cyan-400 block">Project:</strong> Built a 2D platformer game engine from scratch using JavaScript.
-                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Mastered game loop mechanics, collision detection, and sprite animation, deepening my understanding of physics in a digital space.
-                            </p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="2d-platformer">View Code</button>
-                        </div>
-                    </div>
-                </section>
-                <section id="content-bots" class="content-section">
-                     <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Bots</h2>
-                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
-                            <div class="relative w-full h-40 mb-4">
-                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Discord Moderation Bot</h3>
-                            <p class="text-gray-300 flex-grow mb-4 text-sm">
-                                <strong class="text-cyan-400 block">Project:</strong> Developed a bot to automate user moderation and custom commands for a community server.
-                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Learned to interact with third-party APIs, manage asynchronous events, and handle state for a persistent application.
-                            </p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="discord-bot">View Code</button>
-                        </div>
-                    </div>
-                </section>
-                <section id="content-misc" class="content-section">
-                     <h2 class="text-2xl sm:text-3xl font-bold text-cyan-400 mb-4">Miscellaneous</h2>
-                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="project-card bg-gray-700 rounded-lg p-4 flex flex-col overflow-hidden">
-                            <div class="relative w-full h-40 mb-4">
-                                <img src="https://placehold.co/600x400/083344/67e8f9?text=Static+Preview" alt="Project Static Preview" class="absolute inset-0 rounded-md w-full h-full object-cover">
-                                <img src="https://placehold.co/600x400/0e7490/e0f2fe?text=Live+Demo+GIF" alt="Project Preview GIF" class="gif-preview absolute inset-0 rounded-md w-full h-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Data Visualization Tool</h3>
-                            <p class="text-gray-300 flex-grow mb-4 text-sm">
-                                <strong class="text-cyan-400 block">Project:</strong> Created a web tool to parse CSV files and generate interactive charts using D3.js.
-                                <strong class="text-cyan-400 block mt-2">Learning:</strong> Explored the complexities of data binding and mapping abstract data to visual representations.
-                            </p>
-                            <button class="view-code-btn mt-auto w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded" data-project-id="data-viz-tool">View Code</button>
-                        </div>
-                    </div>
-                </section>
-            </main>
-        </div>
+<main>
+  <section id="top" class="hero">
+    <p class="eyebrow">// autonomous ai &nbsp;·&nbsp; algorithmic trading &nbsp;·&nbsp; local llm</p>
+    <h1 class="hero-title">camouflagechicken</h1>
+    <p class="hero-type"><span id="type-target"></span><span class="cursor">▌</span></p>
+    <p class="hero-sub">I take complex systems apart, distill them into logical flows, and build them back into working software — offline voice agents, multi-agent worlds, and trading bots that touch real money.</p>
+    <div class="hero-links">
+      <a class="btn" href="#projects">see the work ↓</a>
+      <a class="btn ghost" href="https://github.com/camouflagechicken" target="_blank" rel="noopener">github ↗</a>
     </div>
-
-    <!-- Code Viewer Modal -->
-    <div id="code-modal" class="modal-overlay">
-        <div class="modal-container w-[95%] sm:w-[90%] md:max-w-3xl lg:max-w-4xl h-[90vh]">
-            <header class="modal-header p-3 sm:p-4">
-                <h2 id="modal-title" class="text-lg sm:text-xl font-bold text-white">Code Viewer</h2>
-                <button id="modal-close" class="modal-close-btn">&times;</button>
-            </header>
-            <div id="modal-code-tabs" class="code-tabs flex">
-                <!-- Code file tabs will be dynamically inserted here -->
-            </div>
-            <div id="modal-code-content" class="code-content-area">
-                <!-- Code content panes will be dynamically inserted here -->
-            </div>
-        </div>
+    <div class="hero-stats">
+      <div><span class="stat-num">9</span><span class="stat-label">shipped repos</span></div>
+      <div><span class="stat-num">100%</span><span class="stat-label">offline-first</span></div>
+      <div><span class="stat-num">5+</span><span class="stat-label">voice agents built</span></div>
     </div>
+  </section>
 
+  <section id="projects" class="section">
+    <div class="section-head">
+      <h2 class="section-title">// projects</h2>
+      <p class="section-sub">Autonomous systems, from local LLM infrastructure to live trading. Hover a card for the demo, click for the deep dive + code.</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="projects-grid"></div>
+  </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DATA STORE FOR PROJECT CODE (ROBUST VERSION) ---
-            // Using single-quoted strings to prevent template literal conflicts.
-            const projectCode = {
-                'data-structures-final': {
-                    title: 'Data Structures Final',
-                    files: {
-                        'main.java': 'public class MazeSolver {\\n    // Java code for the maze traversal...\\n    public static void main(String[] args) {\\n        System.out.println("Solving maze...");\\n    }\\n}',
-                        'Graph.java': 'public class Graph {\\n    // Graph data structure implementation...\\n}',
-                    }
-                },
-                '2d-platformer': {
-                    title: '2D Platformer',
-                    files: {
-                        'game.js': 'const canvas = document.getElementById(\'game\');\\nconst ctx = canvas.getContext(\'2d\');\\n\\nfunction gameLoop() {\\n    // Game logic here\\n    requestAnimationFrame(gameLoop);\\n}\\ngameLoop();',
-                        'player.js': 'class Player {\\n    constructor() {\\n        this.x = 50;\\n        this.y = 50;\\n    }\\n}',
-                        'style.css': 'canvas {\\n    border: 1px solid black;\\n    background: #f0f0f0;\\n}'
-                    }
-                },
-                'discord-bot': {
-                    title: 'Discord Moderation Bot',
-                    files: {
-                        'index.js': 'const { Client, Intents } = require(\'discord.js\');\\nconst client = new Client({ intents: [Intents.FLAGS.GUILDS] });\\n\\nclient.on(\'ready\', () => {\\n  console.log(`Logged in as ${client.user.tag}!`);\\n});\\n\\nclient.login(\'YOUR_TOKEN_HERE\');',
-                        'package.json': '{\\n  "name": "discord-bot",\\n  "version": "1.0.0",\\n  "description": "",\\n  "main": "index.js",\\n  "dependencies": {\\n    "discord.js": "^13.1.0"\\n  }\\n}'
-                    }
-                },
-                'data-viz-tool': {
-                    title: 'Data Visualization Tool',
-                    files: {
-                        'index.html': '<!DOCTYPE html>\\n<html>\\n<head>\\n    <script src="https://d3js.org/d3.v7.min.js"><\\/script>\\n</head>\\n<body>\\n    <svg id="chart" width="400" height="300"><\\/svg>\\n    <script src="chart.js"><\\/script>\\n</body>\\n</html>',
-                        'chart.js': '// D3.js code to create a chart\\nd3.select(\'#chart\').append(\'circle\').attr(\'cx\', 50).attr(\'cy\', 50).attr(\'r\', 20);'
-                    }
-                }
-            };
+  <section id="about" class="section narrow">
+    <h2 class="section-title">// about</h2>
+    <div class="about-body">
+      <p>I've been writing code since I was a kid, and I never stopped taking systems apart to see how they work. My instinct is to <strong>distill any system into a logical flow, then build it back into working software</strong> — full-stack apps shipped end to end, automated workflows, and simulations where changing one variable reveals how the whole thing behaves.</p>
+      <p>That drive now powers my AI work: <strong>offline LLM infrastructure, real-time voice agents, multi-agent systems, and autonomous trading</strong> — where I sweat the reliability details (low-latency concurrency, durable memory, deterministic risk) that make software real.</p>
+      <p class="about-rule">I treat AI as a collaborator, not a competitor.</p>
+    </div>
+  </section>
 
+  <section id="stack" class="section narrow">
+    <h2 class="section-title">// stack</h2>
+    <div class="stack-groups">
+      <div class="stack-group">
+        <h3>Languages &amp; frameworks</h3>
+        <ul class="tags"><li>Python</li><li>asyncio</li><li>FastAPI</li><li>TypeScript</li><li>React / Next.js</li><li>C# / Unity</li><li>Three.js</li><li>SQL</li></ul>
+      </div>
+      <div class="stack-group">
+        <h3>Local AI &amp; speech</h3>
+        <ul class="tags"><li>LM Studio</li><li>llama.cpp</li><li>Whisper</li><li>Piper</li><li>Kokoro</li><li>ChromaDB</li><li>mem0</li></ul>
+      </div>
+      <div class="stack-group">
+        <h3>Generative media</h3>
+        <ul class="tags"><li>ComfyUI</li><li>SDXL / Flux</li><li>ControlNet</li><li>IP-Adapter</li><li>TRELLIS</li><li>Wan / LTX-Video</li></ul>
+      </div>
+      <div class="stack-group">
+        <h3>Trading &amp; data</h3>
+        <ul class="tags"><li>Kraken WS / REST</li><li>CCXT</li><li>backtesting</li><li>pandas</li><li>Streamlit</li><li>SQLite / MySQL</li></ul>
+      </div>
+    </div>
+  </section>
+</main>
 
-            // --- TAB SWITCHING LOGIC ---
-            const mainTabs = document.querySelectorAll('[data-main-tab]');
-            const subTabContainers = document.querySelectorAll('.sub-tab-container');
-            const contentSections = document.querySelectorAll('.content-section');
+<footer class="footer">
+  <p>© <span id="year"></span> camouflagechicken · built from scratch · <a href="https://github.com/camouflagechicken" target="_blank" rel="noopener">github.com/camouflagechicken</a></p>
+</footer>
 
-            function switchMainTab(targetTab) {
-                mainTabs.forEach(tab => tab.classList.toggle('active', tab === targetTab));
-                const targetId = targetTab.dataset.mainTab;
-                subTabContainers.forEach(container => container.classList.toggle('open', container.id === `sub-tabs-${targetId}`));
-                const firstSubTab = document.querySelector(`#sub-tabs-${targetId} .sub-tab`);
-                if (firstSubTab) switchContent(firstSubTab);
-            }
-            
-            function switchContent(targetSubTab) {
-                const parentContainer = targetSubTab.closest('.sub-tab-container');
-                parentContainer.querySelectorAll('.sub-tab').forEach(sub => sub.classList.remove('active'));
-                targetSubTab.classList.add('active');
-                const contentId = targetSubTab.dataset.contentId;
-                contentSections.forEach(section => section.classList.toggle('visible', section.id === contentId));
-            }
+<!-- Project detail modal -->
+<div id="modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-container">
+    <header class="modal-header">
+      <div>
+        <span class="modal-cat" id="modal-cat"></span>
+        <h3 id="modal-title"></h3>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    </header>
+    <div class="modal-media">
+      <div class="modal-preview" id="modal-preview">
+        <span>demo gif goes here</span>
+      </div>
+      <div class="modal-meta" id="modal-meta"></div>
+    </div>
+    <nav class="modal-tabs" id="modal-tabs"></nav>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
 
-            document.getElementById('main-tabs').addEventListener('click', (e) => {
-                if (e.target.matches('[data-main-tab]')) switchMainTab(e.target);
-            });
-            
-            // --- MODAL LOGIC ---
-            const modal = document.getElementById('code-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalCloseBtn = document.getElementById('modal-close');
-            const codeTabsContainer = document.getElementById('modal-code-tabs');
-            const codeContentContainer = document.getElementById('modal-code-content');
-
-            function openModal(projectId) {
-                const projectData = projectCode[projectId];
-                if (!projectData) return;
-
-                modalTitle.textContent = projectData.title;
-                codeTabsContainer.innerHTML = '';
-                codeContentContainer.innerHTML = '';
-
-                Object.entries(projectData.files).forEach(([filename, code], index) => {
-                    const isActive = index === 0;
-                    // Create Tab Button
-                    const tabButton = document.createElement('button');
-                    tabButton.className = `code-tab p-2 text-xs sm:p-3 sm:text-sm ${isActive ? 'active' : ''}`;
-                    tabButton.textContent = filename;
-                    tabButton.dataset.filename = filename;
-                    codeTabsContainer.appendChild(tabButton);
-
-                    // Create Code Content Pane
-                    const contentPane = document.createElement('div');
-                    contentPane.className = `code-content ${isActive ? 'active' : ''}`;
-                    contentPane.dataset.filename = filename;
-                    contentPane.innerHTML = `<pre><code class="language-js p-2 sm:p-4">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`;
-                    codeContentContainer.appendChild(contentPane);
-                });
-
-                modal.style.display = 'flex';
-            }
-
-            function closeModal() {
-                modal.style.display = 'none';
-            }
-            
-            // --- UNIFIED EVENT LISTENER FOR CONTAINER ---
-            document.querySelector('.container').addEventListener('click', (e) => {
-                // Handle sub-tab clicks
-                if (e.target.matches('.sub-tab')) {
-                    switchContent(e.target);
-                }
-                // Handle "View Code" button clicks
-                const viewCodeBtn = e.target.closest('.view-code-btn');
-                if (viewCodeBtn) {
-                    const projectId = viewCodeBtn.dataset.projectId;
-                    openModal(projectId);
-                }
-            });
-
-            // Event listeners for closing the modal
-            modalCloseBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target.closest('.modal-container')) return;
-                closeModal();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeModal();
-            });
-
-            // Event listener for switching code tabs inside the modal
-            codeTabsContainer.addEventListener('click', (e) => {
-                if (e.target.matches('.code-tab')) {
-                    const filename = e.target.dataset.filename;
-                    codeTabsContainer.querySelectorAll('.code-tab').forEach(tab => tab.classList.toggle('active', tab === e.target));
-                    codeContentContainer.querySelectorAll('.code-content').forEach(content => content.classList.toggle('active', content.dataset.filename === filename));
-                }
-            });
-
-            // Initialize view
-            switchMainTab(document.querySelector('[data-main-tab].active'));
-        });
-    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-

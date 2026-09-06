@@ -55,13 +55,13 @@ a:hover{text-decoration:underline}
 .nav-links a.external{color:var(--accent)}
 
 /* hero */
-.hero{max-width:var(--maxw);margin:0 auto;padding:110px 28px 70px;min-height:78vh;display:flex;flex-direction:column;justify-content:center}
+.hero{max-width:var(--maxw);margin:0 auto;padding:110px 28px 70px;min-height:78vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
 .eyebrow{font-family:var(--mono);color:var(--green);font-size:13px;margin:0 0 18px}
 .hero-title{font-size:clamp(42px,8vw,84px);font-weight:800;letter-spacing:-.03em;margin:0 0 14px;line-height:1.02}
 .hero-type{font-family:var(--mono);font-size:clamp(16px,2.4vw,22px);color:var(--accent);min-height:30px;margin:0 0 18px}
 .cursor{color:var(--green)}
-.hero-sub{max-width:640px;color:var(--muted);font-size:17px;margin:0 0 28px}
-.hero-links{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.hero-sub{max-width:640px;color:var(--muted);font-size:17px;margin:0 auto 28px}
+.hero-links{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;justify-content:center}
 .btn{
   display:inline-block;padding:11px 22px;border-radius:9px;font-weight:600;font-size:15px;
   background:var(--accent);color:#04121f;border:1px solid transparent;transition:transform .15s,background .15s;
@@ -185,9 +185,9 @@ pre code{font-family:var(--mono);font-size:13px;line-height:1.55;padding:18px;di
 .mono{font-family:var(--mono)}
 .hero-aka{font-family:var(--mono);color:var(--muted);font-size:16px;margin:-4px 0 22px}
 .hero-aka span{color:var(--green)}
-.stats{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:0 28px 70px}
-.stat{background:var(--panel);border:1px solid var(--border-soft);border-radius:var(--radius);padding:22px 30px;min-width:150px;text-align:center;display:flex;flex-direction:column;gap:6px}
-.stat-num{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--accent)}
+.stats{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:0 28px 70px}
+.stat{background:none;border:none;padding:0 26px;min-width:110px;text-align:center;display:flex;flex-direction:column;gap:4px}
+.stat-num{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--accent)}
 .stat-label{font-size:12px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
 
 /* more projects */

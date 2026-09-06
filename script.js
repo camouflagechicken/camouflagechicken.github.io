@@ -506,8 +506,47 @@ function typeLoop() {
   }
 }
 
+/* ---------- more projects ---------- */
+const MORE_PROJECTS = [
+  { name: "codex-arc", desc: "Natural-language code editor that creates/updates files via a local LLM.", tech: ["JS", "Tailwind", "LM Studio"], repo: "https://github.com/camouflagechicken/codex-arc" },
+  { name: "multiplayer-wordle", desc: "Live Wordle clone with active users, hosted with GitHub-backed storage.", tech: ["React", "TypeScript"], repo: "https://github.com/camouflagechicken/multiplayer-wordle" },
+  { name: "RE3-Web-Portal", desc: "Resident Evil 3 (PS1) running in the browser via EmulatorJS, with save states.", tech: ["JS", "EmulatorJS", "IndexedDB"], repo: "https://github.com/camouflagechicken/RE3-Web-Portal" },
+  { name: "deduplication-engine", desc: "Browser tool that hashes a folder and prunes duplicate files client-side.", tech: ["JS", "SHA-256", "JSZip"], repo: "https://github.com/camouflagechicken/deduplication-engine" },
+  { name: "EzRead", desc: "React Native e-reader with on-device TTS intent.", tech: ["Expo", "React Native", "Zustand"], repo: "https://github.com/camouflagechicken/EzRead" }
+];
+
+function renderMore() {
+  $("#more-grid").innerHTML = MORE_PROJECTS.map((m) => `
+    <div class="more-card">
+      <h3><a href="${m.repo}" target="_blank" rel="noopener">${m.name} ↗</a></h3>
+      <p>${m.desc}</p>
+      <div class="card-tags">${m.tech.map((t) => `<span class="tag">${t}</span>`).join("")}</div>
+    </div>`).join("");
+}
+
+/* ---------- animated counters ---------- */
+function animateCounters() {
+  const nums = document.querySelectorAll(".stat-num[data-count]");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count, t0 = performance.now();
+      const step = (t) => {
+        const p = Math.min(1, (t - t0) / 900);
+        el.textContent = Math.round(target * p);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  nums.forEach((n) => io.observe(n));
+}
+
 /* ---------- init ---------- */
 renderFilters();
 renderGrid("all");
+renderMore();
+animateCounters();
 typeLoop();
 $("#year").textContent = new Date().getFullYear();

@@ -524,23 +524,35 @@ function renderMore() {
     </div>`).join("");
 }
 
-/* ---------- animated counters ---------- */
+/* ---------- animated counters (progressive enhancement) ---------- */
 function animateCounters() {
-  const nums = document.querySelectorAll(".stat-num[data-count]");
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      const el = e.target, target = +el.dataset.count, t0 = performance.now();
+  const nums = Array.from(document.querySelectorAll(".stat-num[data-count]"));
+  nums.forEach((el) => {
+    const target = +el.dataset.count;
+    const suffix = el.dataset.suffix || "";
+    let done = false;
+    const run = () => {
+      if (done) return;
+      done = true;
+      const t0 = performance.now();
       const step = (t) => {
-        const p = Math.min(1, (t - t0) / 900);
-        el.textContent = Math.round(target * p);
+        const p = Math.min(1, (t - t0) / 800);
+        el.textContent = Math.round(target * p) + suffix;
         if (p < 1) requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
-      io.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-  nums.forEach((n) => io.observe(n));
+    };
+    el.textContent = "0" + suffix;
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((e) => { if (e.isIntersecting) { run(); obs.disconnect(); } });
+      }, { threshold: 0.15 });
+      io.observe(el);
+      setTimeout(run, 2500);   // guaranteed fallback if never scrolled into view
+    } else {
+      run();
+    }
+  });
 }
 
 /* ---------- init ---------- */

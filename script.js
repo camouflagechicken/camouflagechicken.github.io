@@ -314,6 +314,35 @@ async void GenerateAsset(string prompt, string style) {
     }
 }` }
     ]
+  },
+  {
+    slug: "modelscore", name: "modelScore", cat: "infra", emoji: "🎯",
+    gradient: "linear-gradient(135deg,#0d2b2b 0%,#161b22 100%)",
+    tagline: "Local LLM benchmark platform",
+    tech: ["Python", "FastAPI", "SQLite", "httpx"],
+    repo: "https://github.com/camouflagechicken/modelscore",
+    why: "Scores any local (OpenAI-compatible) LLM across four capability categories — tool calling, code logic, agentic planning, and constraint following — with deterministic grading and a web dashboard.",
+    bullets: [
+      "Tool calling: JSON-schema adherence, enum constraints, and hallucination resistance.",
+      "Code logic: generated code is extracted and run in a sandboxed subprocess against deterministic tests.",
+      "Deterministic grading with scoring traces and per-item deductions.",
+      "Weighted scoring engine, per-run persistence (SQLite), and a static HTML/JS dashboard."
+    ],
+    code: [
+      { file: "config.py (scoring weights)", lang: "python", code:
+`class Settings:
+    LLM_ENDPOINT: str = os.getenv("MODELSCORE_LLM_ENDPOINT", "http://localhost:1234/v1")
+    LLM_API_KEY: str = os.getenv("MODELSCORE_API_KEY", "lm-studio")
+
+    # Category weights (sum to 1.0) - each is a scored benchmark
+    CATEGORY_WEIGHTS: dict = {
+        "tool_calling": 0.25,         # JSON-schema adherence + hallucination resistance
+        "code_logic": 0.25,           # generated code runs in a sandboxed subprocess
+        "agentic_planning": 0.25,     # multi-step task decomposition
+        "constraint_following": 0.25, # rule-based instruction checks
+    }
+    CODE_EXEC_TIMEOUT: int = int(os.getenv("MODELSCORE_CODE_TIMEOUT", "10"))` }
+    ]
   }
 ];
 
@@ -512,7 +541,10 @@ const MORE_PROJECTS = [
   { name: "multiplayer-wordle", desc: "Live Wordle clone with active users, hosted with GitHub-backed storage.", tech: ["React", "TypeScript"], repo: "https://github.com/camouflagechicken/multiplayer-wordle" },
   { name: "RE3-Web-Portal", desc: "Resident Evil 3 (PS1) running in the browser via EmulatorJS, with save states.", tech: ["JS", "EmulatorJS", "IndexedDB"], repo: "https://github.com/camouflagechicken/RE3-Web-Portal" },
   { name: "deduplication-engine", desc: "Browser tool that hashes a folder and prunes duplicate files client-side.", tech: ["JS", "SHA-256", "JSZip"], repo: "https://github.com/camouflagechicken/deduplication-engine" },
-  { name: "EzRead", desc: "React Native e-reader with on-device TTS intent.", tech: ["Expo", "React Native", "Zustand"], repo: "https://github.com/camouflagechicken/EzRead" }
+  { name: "EzRead", desc: "React Native e-reader with on-device TTS intent.", tech: ["Expo", "React Native", "Zustand"], repo: "https://github.com/camouflagechicken/EzRead" },
+  { name: "pixelforge", desc: "Zero-dependency procedural pixel-art generator: 19 generators, 10 palettes, CLI + web dashboard.", tech: ["Python (stdlib)", "custom PNG", "HTTP dashboard"], repo: "https://github.com/camouflagechicken/pixelforge" },
+  { name: "stockdata", desc: "Yahoo Finance scrape -> analyze -> visualize: ratios, growth/CAGR, 0-100 investment score, charts.", tech: ["Python", "pandas", "matplotlib", "seaborn"], repo: "https://github.com/camouflagechicken/stockdata" },
+  { name: "voicemem", desc: "Fully-local voice assistant (VoiceMem fork): local llama-server + Qwen + piper TTS, dual-brain memory.", tech: ["Python", "llama.cpp", "piper TTS", "mem0"], repo: "https://github.com/camouflagechicken/voicemem" }
 ];
 
 function renderMore() {
